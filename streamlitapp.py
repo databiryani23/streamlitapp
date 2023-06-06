@@ -1,4 +1,5 @@
 import streamlit
+import pandas
 
 #Add title to streamlit app
 streamlit.title('My first app')
@@ -18,3 +19,9 @@ streamlit.text('🥑🍞 Avocado and Toast')
 
 ##Add Smoothie Header
 streamlit.header('🍌🥭 Build Your Own Fruit Smoothie 🥝🍇')
+
+
+##Read file from s3
+my_fruit_list = pandas.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt")
+
+streamlit.dataframe(my_fruit_list)
