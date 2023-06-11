@@ -51,6 +51,6 @@ streamlit.text('The fruit load list contains:')
 streamlit.dataframe(data_rows)
 
 add_fruit=streamlit.text_input('Enter fruit you want to add')
-streamlit.text('Thanks for adding {}'.format(add_fruit))
-my_cur.execute('insert into fruit_load_list values ({})'.format(add_fruit)
+streamlit.text('Thanks for adding ',add_fruit)
+my_cur.execute("insert into PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST values ('from streamlit')")
 
