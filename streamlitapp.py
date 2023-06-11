@@ -32,27 +32,36 @@ fruits_selected=streamlit.multiselect("Pick some fruits:", list(my_fruit_list.in
 # Display the table on the page.
 streamlit.dataframe(my_fruit_list.loc[fruits_selected])
 
-streamlit.header("Fruityvice Fruit Advice!")
-fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
-streamlit.write('The user entered ', fruit_choice)
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_choice)
-fruityvice_normalized=pandas.json_normalize(fruityvice_response.json())
-streamlit.dataframe(fruityvice_normalized)
-
-
 streamlit.stop()
+
+streamlit.header("Fruityvice Fruit Advice!")
+try:
+  fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
+  if not fruit_choice:
+    streamlit.error('Enter the fruit name you want to get information about!')
+  else:
+    streamlit.write('The user entered ', fruit_choice)
+    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_choice)
+    fruityvice_normalized=pandas.json_normalize(fruityvice_response.json())
+    streamlit.dataframe(fruityvice_normalized)
+except URLError as e:
+  streamlit.error()
+  
+
+
+
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
-my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
-my_data_row = my_cur.fetchone()
-streamlit.text("Hello from Snowflake:")
-streamlit.text(my_data_row)
+
+
 
 my_cur.execute("select * from fruit_load_list")
 data_rows=my_cur.fetchall()
 streamlit.text('The fruit load list contains:')
 streamlit.dataframe(data_rows)
+
+
 
 add_fruit=streamlit.text_input('Enter fruit you want to add','fruit')
 streamlit.write('Thanks for adding ',add_fruit)
