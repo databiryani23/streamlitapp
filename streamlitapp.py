@@ -32,7 +32,7 @@ fruits_selected=streamlit.multiselect("Pick some fruits:", list(my_fruit_list.in
 # Display the table on the page.
 streamlit.dataframe(my_fruit_list.loc[fruits_selected])
 
-streamlit.stop()
+
 
 streamlit.header("Fruityvice Fruit Advice!")
 try:
@@ -47,7 +47,7 @@ try:
 except URLError as e:
   streamlit.error()
   
-
+streamlit.stop()
 
 
 
