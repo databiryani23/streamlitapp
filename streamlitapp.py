@@ -1,6 +1,7 @@
 import streamlit
 import pandas
 import requests
+import snowflake.connector
 #Add title to streamlit app
 streamlit.title('My first app')
 
